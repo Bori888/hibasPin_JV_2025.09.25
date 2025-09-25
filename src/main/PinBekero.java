@@ -11,7 +11,7 @@ public class PinBekero extends javax.swing.JFrame {
     private static int kattDb = 0;
     private static boolean mentve = false;
     private static String pin = "";
-    
+
     public PinBekero() {
         initComponents();
     }
@@ -25,7 +25,7 @@ public class PinBekero extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        pnlSzamokHelye = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -45,38 +45,38 @@ public class PinBekero extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel1.setLayout(new java.awt.GridLayout(0, 3));
+        pnlSzamokHelye.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        pnlSzamokHelye.setLayout(new java.awt.GridLayout(0, 3));
 
         jButton1.setText("jButton1");
-        jPanel1.add(jButton1);
+        pnlSzamokHelye.add(jButton1);
 
         jButton4.setText("jButton4");
-        jPanel1.add(jButton4);
+        pnlSzamokHelye.add(jButton4);
 
         jButton3.setText("jButton3");
-        jPanel1.add(jButton3);
+        pnlSzamokHelye.add(jButton3);
 
         jButton2.setText("jButton2");
-        jPanel1.add(jButton2);
+        pnlSzamokHelye.add(jButton2);
 
         jButton7.setText("jButton7");
-        jPanel1.add(jButton7);
+        pnlSzamokHelye.add(jButton7);
 
         jButton6.setText("jButton6");
-        jPanel1.add(jButton6);
+        pnlSzamokHelye.add(jButton6);
 
         jButton5.setText("jButton5");
-        jPanel1.add(jButton5);
+        pnlSzamokHelye.add(jButton5);
 
         jButton8.setText("jButton8");
-        jPanel1.add(jButton8);
+        pnlSzamokHelye.add(jButton8);
 
         jButton9.setText("jButton9");
-        jPanel1.add(jButton9);
+        pnlSzamokHelye.add(jButton9);
 
         jButton10.setText("jButton10");
-        jPanel1.add(jButton10);
+        pnlSzamokHelye.add(jButton10);
 
         chbMutat.setText("mutat");
         chbMutat.setEnabled(false);
@@ -92,7 +92,7 @@ public class PinBekero extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlSzamokHelye, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(chbMutat, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -103,7 +103,7 @@ public class PinBekero extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(chbMutat)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnlSzamokHelye, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(71, Short.MAX_VALUE))
         );
 
@@ -111,41 +111,44 @@ public class PinBekero extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        for (int i = 0; i < jPanel1.getComponentCount(); i++) {
-            JButton btn = (JButton) jPanel1.getComponent(i);
+        for (int i = 0; i < pnlSzamokHelye.getComponentCount(); i++) {
+            JButton btn = (JButton) pnlSzamokHelye.getComponent(i);
             btn.setText(i + "");
-            btn.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (kattDb <= 4) {
-                        kattDb++;
-                        pin += e.getActionCommand();
-                    } 
-                    if(kattDb == 4) {
-                        chbMutat.setEnabled(true);
-                        JOptionPane.showMessageDialog(rootPane, "Pin mentve!");
-                    }
-                    
-                }
-            });
+            btn.setBackground(null); // Alapértelmezett szín visszaállítás
+            btn.addActionListener(new SzamGombListener());
         }
     }//GEN-LAST:event_formWindowOpened
 
     private void chbMutatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbMutatActionPerformed
-        if(chbMutat.isSelected()){
-            for (int i = 0; i < pin.length(); i++) {
-                int gomb = Integer.parseInt(pin.charAt(i)+"");
-                jPanel1.getComponent(gomb).setBackground(Color.red);
-            }
-        }else{
-            chbMutat.setEnabled(false);
-            kattDb = 0;
-            for (int i = 0; i < pin.length(); i++) {
-                int gomb = Integer.parseInt(pin.charAt(i)+"");
-                jPanel1.getComponent(gomb).setBackground(Color.LIGHT_GRAY);
-            }
+        if (chbMutat.isSelected()) {
+            kiemelPin(true);
+        } else {
+            kiemelPin(false);
         }
     }//GEN-LAST:event_chbMutatActionPerformed
+    private class SzamGombListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (kattDb < 4) {
+                kattDb++;
+                pin += e.getActionCommand();
+            }
+            if (kattDb == 4 && !mentve) {
+                mentve = true;
+                chbMutat.setEnabled(true);
+                JOptionPane.showMessageDialog(rootPane, "Pin mentve!");
+            }
+        }
+    }
+
+    private void kiemelPin(boolean mutat) {
+        for (int i = 0; i < pin.length(); i++) {
+            int gomb = Integer.parseInt(pin.charAt(i) + "");
+            JButton btn = (JButton) pnlSzamokHelye.getComponent(gomb);
+            btn.setBackground(mutat ? Color.RED : null);
+        }
+    }
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -191,6 +194,6 @@ public class PinBekero extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel pnlSzamokHelye;
     // End of variables declaration//GEN-END:variables
 }
