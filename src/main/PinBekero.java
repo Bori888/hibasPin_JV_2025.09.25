@@ -5,6 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.io.IOException;
 
 public class PinBekero extends javax.swing.JFrame {
 
@@ -138,7 +142,20 @@ public class PinBekero extends javax.swing.JFrame {
                 mentve = true;
                 chbMutat.setEnabled(true);
                 JOptionPane.showMessageDialog(rootPane, "Pin mentve!");
+
+                // PIN mentése fájlba
+                mentPinFajlba(pin);
             }
+        }
+    }
+
+    private void mentPinFajlba(String pin) {
+        Path path = Paths.get("pin.txt");
+        try {
+            Files.writeString(path, pin);
+            System.out.println("PIN sikeresen mentve a fájlba.");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Hiba a PIN mentésekor: " + ex.getMessage(), "Hiba", JOptionPane.ERROR_MESSAGE);
         }
     }
 
