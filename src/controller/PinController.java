@@ -1,4 +1,3 @@
-
 package controller;
 
 import java.awt.event.ActionEvent;
@@ -8,6 +7,7 @@ import modell.PinModell;
 import view.PinView;
 
 public class PinController {
+
     private PinModell model;
     private PinView view;
 
@@ -20,6 +20,7 @@ public class PinController {
     }
 
     private class ButtonListener implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
             String cmd = e.getActionCommand();
@@ -30,9 +31,13 @@ public class PinController {
                         view.showMessage("PIN mentve!");
                         try {
                             model.saveToFile();
+                            view.showMessage("A fájlba elmentve!");
+                            view.printToConsole("A fájlba elmentve!");
                         } catch (IOException ex) {
                             view.showMessage("Hiba a PIN mentésekor: " + ex.getMessage());
+                            view.printToConsole("Hiba a PIN mentésekor: " + ex.getMessage());
                         }
+
                     }
                 }
             }
@@ -40,6 +45,7 @@ public class PinController {
     }
 
     private class CheckboxListener implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
             boolean selected = view.isCheckboxSelected();
@@ -47,4 +53,3 @@ public class PinController {
         }
     }
 }
-

@@ -61,6 +61,10 @@ public class PinView extends JFrame {
             buttons[digit].setBackground(highlight ? Color.RED : null);
         }
     }
+    public void printToConsole(String message) {
+    System.out.println(message);
+}
+
 
     public void showMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
